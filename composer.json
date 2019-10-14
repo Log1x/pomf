@@ -1,0 +1,27 @@
+{
+  "name": "log1x/pomf",
+  "type": "package",
+  "license": "MIT",
+  "description": "A simple, modernized, stand-alone implementation of the Pomf API for screenshot uploading.",
+  "homepage": "https://github.com/log1x/pomf",
+  "authors": [
+    {
+      "name": "Brandon Nifong",
+      "email": "brandon@tendency.me",
+      "homepage": "https://github.com/log1x"
+    }
+  ],
+  "keywords": [
+    "pomf",
+    "screenshot",
+    "sharex",
+    "katana",
+    "windows",
+    "macos"
+  ],
+  "require": {
+    "nesbot/carbon": "^2.13",
+    "samayo/bulletproof": "^4.0",
+    "hashids/hashids": "^3.0"
+  }
+}
