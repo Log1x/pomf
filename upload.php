@@ -50,12 +50,12 @@ class Pomf
     protected function error($value, $code = 500)
     {
         header('Content-Type: application/json; charset=UTF-8');
-        http_response_code((int) $code ?? 500);
+        http_response_code((int) $code);
 
         echo json_encode([
-            'status' => $code,
-            'success' => false,
-            'errorcode' => $code,
+            'status'      => $code,
+            'success'     => false,
+            'errorcode'   => $code,
             'description' => $value
         ], JSON_PRETTY_PRINT);
     }
@@ -64,18 +64,17 @@ class Pomf
      * Responds with a JSON body that the request was successful.
      *
      * @param  string $value
-     * @param  int    $code
      * @return mixed
      */
-    protected function success($value, $code = 200)
+    protected function success($value)
     {
         header('Content-Type: application/json; charset=UTF-8');
-        http_response_code((int) $code ?? 200);
+        http_response_code(200);
 
         echo json_encode([
-            'status' => $code,
+            'status'  => $code,
             'success' => true,
-            'files' => $value
+            'files'   => $value
         ], JSON_PRETTY_PRINT);
     }
 
@@ -163,25 +162,21 @@ class Pomf
         }
 
         foreach ($this->bundle($_FILES) as $image) {
-            try {
-                if ($image->upload()) {
-                    $images[] = [
-                        'name' => $image->getName(),
-                        'url'  => $this->getFile($image),
-                        'hash' => sha1_file($image->getFullPath()),
-                        'size' => $image->getSize(),
-                    ];
-                }
-            } catch (Exception $error) {
-                return $this->response($error->getMessage(), $error->getCode());
+            if ($image->upload()) {
+                $images[] = [
+                    'name' => $image->getName(),
+                    'url'  => $this->getFile($image),
+                    'hash' => sha1_file($image->getFullPath()),
+                    'size' => $image->getSize(),
+                ];
             }
-
-            if (empty($images)) {
-                return $this->error('Images uploaded are not valid.');
-            }
-
-            return $this->success($images);
         }
+
+        if (empty($images)) {
+            return $this->error('Images uploaded are not valid.');
+        }
+
+        return $this->success($images);
     }
 }
 
