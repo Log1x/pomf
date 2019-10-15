@@ -28,11 +28,11 @@ $ composer create-project log1x/pomf screenshots
 For testing purposes, you can use `curl`:
 
 ```bash
-curl -i -X POST -F 'file=test@path/to/test.jpg' 'https://example.com/screenshots/upload.php?token=secret'
+$ curl -i -X POST -F 'file=test@path/to/test.jpg' 'https://example.com/screenshots/upload.php?token=secret'
 ```
 
 or `httpie`:
 
 ```bash
-http --form 'https://example.com/screenshots/upload.php?token=secret' 'test@path/to/test.jpg'
+$ http --form 'https://example.com/screenshots/upload.php?token=secret' 'test@path/to/test.jpg'
 ```
