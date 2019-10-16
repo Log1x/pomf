@@ -180,7 +180,7 @@ class Pomf
     }
 }
 
-if (class_exists('Log1x\\Pomf\\Pomf') || ! file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
+if (! file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
     return;
 }
 
