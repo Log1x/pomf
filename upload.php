@@ -30,10 +30,10 @@ class Pomf
     public function __construct()
     {
         if (! $_SERVER['REQUEST_METHOD'] == 'POST') {
-            return;
+            return $this->error('Invalid request method.', 401);
         }
 
-        $config = file_exists($config = __DIR__ . '/../config.php') ? require_once($config) : [];
+        $config = file_exists($config = __DIR__ . '/config.php') ? require_once($config) : [];
         $this->config = (object) array_merge($this->config, $config);
 
         $this->verifyToken();
@@ -53,11 +53,11 @@ class Pomf
         http_response_code((int) $code);
 
         echo json_encode([
-            'status'      => $code,
             'success'     => false,
             'errorcode'   => $code,
             'description' => $value
         ], JSON_PRETTY_PRINT);
+        exit();
     }
 
     /**
@@ -72,10 +72,10 @@ class Pomf
         http_response_code(200);
 
         echo json_encode([
-            'status'  => $code,
             'success' => true,
             'files'   => $value
         ], JSON_PRETTY_PRINT);
+        exit();
     }
 
     /**
@@ -158,7 +158,7 @@ class Pomf
     protected function upload($images = [])
     {
         if (empty($_FILES)) {
-            $this->error('No input file(s) found.');
+           return $this->error('No input file(s) found.');
         }
 
         foreach ($this->bundle($_FILES) as $image) {
